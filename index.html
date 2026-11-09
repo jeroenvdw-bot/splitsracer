@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Splitsracer</title>
+  <meta name="description" content="Oefen splitsingen op de racebaan. Kies de juiste splitsing en race naar de finish!">
+  <meta name="theme-color" content="#1f8a4d">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Splitsracer">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  <div id="app">
+    <canvas id="game" aria-label="Racebaan met auto's en splitsingen"></canvas>
+
+    <div id="ui">
+      <section id="screen-title" class="screen screen-title">
+        <div class="title-card">
+          <p class="kicker">Splitsingen op de racebaan</p>
+          <h1 class="logo"><span>Splits</span><span>racer</span></h1>
+          <p class="tagline">Kies de juiste splitsing en race naar de finish!</p>
+          <div class="menu-buttons">
+            <button id="btn-play" class="btn btn-primary" type="button">Speel</button>
+            <button id="btn-settings" class="btn btn-secondary" type="button">Instellingen</button>
+          </div>
+          <p class="credit">Sprites: Kenney · CC0</p>
+        </div>
+      </section>
+
+      <section id="screen-settings" class="screen screen-settings hidden">
+        <div class="panel settings-panel">
+          <h2>Instellingen</h2>
+          <div class="setting-group">
+            <div class="setting-label">
+              <span>Grootste getal</span>
+              <small>Tot welk getal oefenen?</small>
+            </div>
+            <div id="max-number" class="segmented" role="group" aria-label="Grootste getal"></div>
+          </div>
+          <div class="setting-group">
+            <div class="setting-label">
+              <span>Racelengte</span>
+              <small>Aantal splitsingen</small>
+            </div>
+            <div id="race-length" class="segmented" role="group" aria-label="Racelengte"></div>
+          </div>
+          <div class="setting-group">
+            <div class="setting-label">
+              <span>Geluid</span>
+              <small>Motor, boost en juichen</small>
+            </div>
+            <button id="sound-toggle" class="btn btn-toggle" type="button" aria-pressed="true">Aan</button>
+          </div>
+          <button id="btn-settings-done" class="btn btn-primary btn-wide" type="button">Klaar</button>
+        </div>
+      </section>
+
+      <div id="countdown" class="countdown hidden" aria-live="assertive"></div>
+      <div id="prompt" class="prompt hidden">Tik op het juiste getal</div>
+      <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+      <button id="btn-mute" class="mute hidden" type="button" aria-label="Geluid aan of uit">
+        <svg class="icon icon-sound" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"></path>
+          <path d="M16 8.5a5 5 0 0 1 0 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+          <path d="M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+        </svg>
+        <svg class="icon icon-muted" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"></path>
+          <path d="M17 9l5 6M22 9l-5 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+        </svg>
+      </button>
+
+      <section id="screen-result" class="screen screen-result hidden">
+        <div class="panel result-panel">
+          <div id="result-icon" class="result-icon win" aria-hidden="true">
+            <svg class="result-win" viewBox="0 0 64 64">
+              <path d="M20 7h24v7h8v8c0 8-6 14-14 15v6h8v8H18v-8h8v-6C18 36 12 30 12 22v-8h8V7z" fill="#ffd15c" stroke="#c78716" stroke-width="3" stroke-linejoin="round"></path>
+              <path d="M20 14h-4v8c0 4 3 8 7 9M44 14h4v8c0 4-3 8-7 9" fill="none" stroke="#c78716" stroke-width="3" stroke-linecap="round"></path>
+              <path d="M24 52h16" stroke="#c78716" stroke-width="4" stroke-linecap="round"></path>
+            </svg>
+            <svg class="result-lose" viewBox="0 0 64 64">
+              <path d="M18 6v52" stroke="#5b4a3a" stroke-width="6" stroke-linecap="round"></path>
+              <path d="M20 10h34v24H20z" fill="#fff9ee" stroke="#5b4a3a" stroke-width="3"></path>
+              <path d="M20 10h11.3v11.3H20zM42.7 10H54v11.3H42.7zM31.3 21.3h11.4v11.4H31.3zM20 32.7h11.3V44H20zM42.7 32.7H54V44H42.7z" fill="#243336"></path>
+            </svg>
+          </div>
+          <h2 id="result-title">Gewonnen!</h2>
+          <p id="result-message"></p>
+          <div id="result-score" class="result-score"></div>
+          <div class="menu-buttons">
+            <button id="btn-again" class="btn btn-primary" type="button">Nog eens spelen</button>
+            <button id="btn-menu" class="btn btn-secondary" type="button">Menu</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script src="./js/settings.js" defer></script>
+  <script src="./js/splits.js" defer></script>
+  <script src="./js/road.js" defer></script>
+  <script src="./js/audio.js" defer></script>
+  <script src="./js/game.js" defer></script>
+  <script src="./js/main.js" defer></script>
+</body>
+</html>
