@@ -1,15 +1,16 @@
 # Plan — Splitsracer
 
-Educatief racespel voor een zesjarige (eerste leerjaar): splitsingen oefenen als **splitsingen in de weg** op een rechte racebaan, van bovenaf. Nederlands talig, speelbaar als PWA in de browser en installeerbaar op een tablet.
+Educatief racespel voor een zesjarige (eerste leerjaar): oefenen met **splitsingen, optellen en aftrekken** als opgaven op een rechte racebaan, van bovenaf. Nederlands talig, speelbaar als PWA in de browser en installeerbaar op een tablet.
 
 ## Spelidee
 
 - Een **rechte racebaan die verticaal scrollt**: de auto rijdt "omhoog" het scherm in (klassieke top-down racer), de camera volgt op de y-as. De auto van de speler rijdt **vanzelf** (voorlopig geen stuurcontrole).
 - De tegenstander rijdt in een parallelle strook en is **iets sneller** dan de speler → zonder boosts verliest de speler.
 - Op vaste afstanden **splitst de weg zich in twee aftakkingen: links en rechts** (de splitsing). Bovenaan staat een bord met **het totaal** (bv. 7) en **het gegeven getal** (bv. 4). Daaronder staan op elke aftakking grote getallen (kandidaat-antwoorden, waarvan precies één juist is: totaal − gegeven). Later maakt dit het sturen naar links/rechts intuïtief (en oefent meteen de begrippen links/rechts).
-- De auto **stopt automatisch bij de splitsing** (er is geen navigatie nodig om de splitsing te activeren). Het kind **tipt het getal op één van de aftakkingen**:
+- De auto **stopt automatisch bij de opgave** (er is geen navigatie nodig om de opgave te activeren). Het kind **tipt het getal op één van de aftakkingen**:
   - **Juiste keuze** → de auto neemt de juiste weg en krijgt een **boost** (tijdelijke versnelling + vlammen/snelheidslijnen).
   - **Foute keuze** → de auto neemt de **foute weg, zonder boost** — een tragere/langere omweg die daarna weer op de hoofdbaan uitkomt.
+- Naast splitsen kan de opgave ook **optellen** (`a + b = ?`) of **aftrekken** (`a − b = ?`) zijn. Dezelfde splitsing in de weg en getalskaarten worden gebruikt; de instelling **Grootste getal** begrenst alle getallen in de opgave.
 - Tijdens het kiezen **pauzeert de speler**; de tegenstander wacht alleen als de instelling **Tegenstander wacht** aan staat. Anders rijdt de tegenstander door en wordt nadenken dus bestraft. De straf bij fout is het verloren boost-moment plus de omweg.
 - Na de ingestelde lengte is er een finish; wie eerst over de finish rijdt, wint. Winst = feestmoment (confetti).
 - **Toekomstige uitbreiding (nu nog niet):** het kind zelf laten sturen — bij een splitsing links of rechts kiezen via een veeg/tik; de splitsingen activeren nu dus volledig automatisch.
@@ -21,10 +22,11 @@ Educatief racespel voor een zesjarige (eerste leerjaar): splitsingen oefenen als
 | Technologie | Vanilla HTML/CSS/JS + Canvas 2D, geen build-stap |
 | Ontwikkelomgeving | Linux; tooling met Python 3-stdlib + curl (geen Node, PIL, ImageMagick of `unzip` nodig) |
 | Baan | Rechte baan die **verticaal scrollt** (auto rijdt omhoog), finish op vaste (instelbare) afstand — geen rondes |
-| Oefenvorm | Splitsing in de weg (aftakkingen met getalskaarten), géén splitshuisje-overlay |
-| Activeren | Automatisch bij het bereiken van de splitsing; nog geen navigatie/sturen |
+| Oefenvorm | Opgave in de weg (aftakkingen met getalskaarten): splitsen, optellen of aftrekken |
+| Activeren | Automatisch bij het bereiken van de opgave; nog geen navigatie/sturen |
 | Juiste keuze | Juiste weg nemen **met boost** |
 | Foute keuze | Foute (tragere omweg) weg nemen, **zonder boost** |
+| Soort opgave (instelling) | Splitsen, optellen of aftrekken; grootste getal geldt voor alle types |
 | Tijdens kiezen | Speler pauzeert; tegenstander wacht optioneel (instelling) |
 | Max getal (instelling) | Keuzes 5 t/m 10 |
 | Geluid | Ja, gesynthetiseerd via Web Audio (motor, boost, juist/fout, finish) met mute-knop |
@@ -42,8 +44,8 @@ Educatief racespel voor een zesjarige (eerste leerjaar): splitsingen oefenen als
   3. Zip downloaden en uitpakken met `python3 -m zipfile -e` (geen `unzip` nodig).
   Gebruik: `PNG/Cars/car_blue_1.png` (speler) en `PNG/Cars/car_red_1.png` (tegenstander), beide 71×131 en staan al omhoog; `PNG/Objects/tree_large.png`, `tree_small.png` en `rock1..3.png` als scenery. De grass-tile uit de pack is een overgangstile met een bruine rand en is daarom niet als herhalende achtergrond gebruikt; het gras wordt procedureel getekend met polletjes. **De pack bevat geen finishvlag** → finish als checkered lijn + FINISH-bord in canvas. De Y-splitsing is geen kant-en-klare tegel; de baan, aftakkingen, eilandjes en curbs worden procedureel in canvas getekend in dezelfde stijl (grijs-blauw asfalt, oranje/witte curbs). Getalskaarten en borden worden in canvas getekend (groot, goed leesbaar lettertype). Neem `License.txt`/CC0-vermelding op in `assets/README.md`. Geen CDN-afhankelijkheden.
 - **Rendering:** Canvas 2D met camera die de speler volgt op de y-as; devicePixelRatio-scaling; grote tikbare zones (minstens ±64 px) voor tabletgebruik; verticale voortgangsbalk (speler vs. tegenstander) aan de zijkant als HUD.
-- **Splitsgenerator:** totaal willekeurig uit 2..max-instelling; gegeven deel willekeurig 1..totaal−1; juiste keuze = totaal − gegeven; foute kandidaten zijn nabije getallen (bijv. juiste ± 1, begrensd op 0..totaal), nooit gelijk aan het juiste antwoord.
-- **Instellingen** in localStorage: max getal (5–10), racelengte (kort/middel/lang, mappen op het aantal splitsingen), tegenstander wacht bij een opgave (aan/uit), geluid aan/uit.
+- **Oefengenerator:** voor splitsen: totaal willekeurig uit 2..max, gegeven deel 1..totaal−1; voor optellen: som 2..max met twee positieve operanden; voor aftrekken: aftrektal 2..max en aftrekker 1..aftrektal−1. Foute kandidaten zijn nabije getallen (juiste ± 1..3) binnen de ingestelde bovengrens en nooit gelijk aan het juiste antwoord of een getal uit de opgave.
+- **Instellingen** in localStorage: max getal (5–10), soort opgave (splitsen/optellen/aftrekken), racelengte (kort/middel/lang, mappen op het aantal opgaven), tegenstander wacht bij een opgave (aan/uit), geluid aan/uit.
 - **Audio:** lichte gesynthetiseerde geluidjes via Web Audio API; mute-knop in het spel.
 
 ## Schermen / flow
@@ -64,7 +66,7 @@ css/style.css
 js/main.js        start, gameloop, schermen
 js/game.js        race, auto's, camera, boosts, finish
 js/road.js        rechte baan (verticaal scrollend), stroken, aftakkingen links/rechts
-js/splits.js      splitsgenerator + keuzelogica (juist/fout)
+js/splits.js      oefengenerator: splitsen, optellen, aftrekken
 js/settings.js    instellingen + localStorage
 js/audio.js       Web Audio geluidjes + mute
 assets/           Kenney-sprites + README.md (bron/licentie)

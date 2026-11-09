@@ -519,6 +519,36 @@
     ctx.restore();
   }
 
+  function drawEquationSign(ctx, split, centerX, centerY, scale, now) {
+    const reveal = split.resolved && now - split.resolvedAt < 1.2;
+    const operator = split.type === "optellen" ? "+" : "−";
+    const tokens = [
+      { text: String(split.a), color: INK },
+      { text: operator, color: CURB_ORANGE },
+      { text: String(split.b), color: INK },
+      { text: "=", color: INK },
+      reveal
+        ? { text: String(split.answer), color: split.correct ? "#147a43" : "#b3311f" }
+        : { text: "?", color: CURB_ORANGE },
+    ];
+
+    ctx.save();
+    ctx.font = "900 " + Math.round(56 * scale) + "px " + FONT;
+    ctx.textAlign = "left";
+    ctx.textBaseline = "middle";
+    const gap = 10 * scale;
+    const widths = tokens.map((token) => ctx.measureText(token.text).width);
+    const totalWidth =
+      widths.reduce((sum, width) => sum + width, 0) + gap * (tokens.length - 1);
+    let x = centerX - totalWidth / 2;
+    for (let index = 0; index < tokens.length; index += 1) {
+      ctx.fillStyle = tokens[index].color;
+      ctx.fillText(tokens[index].text, x, centerY + 2 * scale);
+      x += widths[index] + gap;
+    }
+    ctx.restore();
+  }
+
   function drawSplitSigns(ctx, view, race, now) {
     const scale = view.scale;
     for (const split of race.splits) {
@@ -526,11 +556,18 @@
       if (geometry.mergeEndY < view.cameraBottomY - 160) continue;
       if (geometry.forkY > view.cameraTopY + 160) continue;
 
+      const isSplit = !split.type || split.type === "splitsen";
       const y = geometry.forkY + SIGN_Y_OFFSET;
-      drawGantry(ctx, view, 320, y, 480, 280, 140);
+      drawGantry(ctx, view, 320, y, 480, isSplit ? 280 : 320, 140);
 
       const centerX = view.sx(320);
       const centerY = view.sy(y);
+
+      if (!isSplit) {
+        drawEquationSign(ctx, split, centerX, centerY, scale, now);
+        continue;
+      }
+
       ctx.save();
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
@@ -555,7 +592,7 @@
 
       ctx.font = "900 " + Math.round(40 * scale) + "px " + FONT;
       ctx.fillStyle = INK;
-      ctx.fillText(String(split.given), centerX - 48 * scale, centerY + 48 * scale);
+      ctx.fillText(String(split.a), centerX - 48 * scale, centerY + 48 * scale);
 
       const reveal = split.resolved && now - split.resolvedAt < 1.2;
       if (reveal) {

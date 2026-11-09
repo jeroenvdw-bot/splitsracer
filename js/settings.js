@@ -9,6 +9,13 @@
     raceLength: "kort",
     sound: true,
     opponentWaits: true,
+    exerciseType: "splitsen",
+  };
+
+  const EXERCISE_TYPES = {
+    splitsen: { label: "Splitsen" },
+    optellen: { label: "Optellen" },
+    aftrekken: { label: "Aftrekken" },
   };
 
   const RACE_LENGTHS = {
@@ -35,6 +42,9 @@
         typeof source.opponentWaits === "boolean"
           ? source.opponentWaits
           : DEFAULTS.opponentWaits,
+      exerciseType: EXERCISE_TYPES[source.exerciseType]
+        ? source.exerciseType
+        : DEFAULTS.exerciseType,
     };
   }
 
@@ -63,6 +73,7 @@
     DEFAULTS,
     RACE_LENGTHS,
     MAX_CHOICES,
+    EXERCISE_TYPES,
     clampMaxNumber,
     normalize,
     load,

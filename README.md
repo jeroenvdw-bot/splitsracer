@@ -1,7 +1,7 @@
 # Splitsracer
 
-Educatief racespel voor een zesjarige: oefen **splitsingen** als splitsingen in de weg.
-De auto rijdt vanzelf omhoog over een verticale racebaan. Bij elke splitsing stopt de
+Educatief racespel voor een zesjarige: oefen **splitsingen, optellen en aftrekken** als opgaven op de racebaan.
+De auto rijdt vanzelf omhoog over een verticale racebaan. Bij elke opgave stopt de
 speler; tik het juiste getal aan op de linker- of rechteraftakking.
 
 - **Juist** → de auto neemt die weg en krijgt een boost.
@@ -44,8 +44,9 @@ volgt de stand van het scherm (liggend of staand).
 
 ## Instellingen
 
-- **Grootste getal:** 5 t/m 10 (het totaal van de splitsing).
-- **Racelengte:** Kort (4 splitsingen), Middel (6), Lang (8).
+- **Grootste getal:** 5 t/m 10 (geldt voor alle soorten opgaven).
+- **Soort opgave:** Splitsen, Optellen of Aftrekken.
+- **Racelengte:** Kort (4 opgaven), Middel (6), Lang (8).
 - **Tegenstander wacht:** aan/uit; of de tegenstander bij een opgave pauzeert. Standaard aan.
 - **Geluid:** aan/uit; de keuze wordt in `localStorage` bewaard.
 
@@ -61,7 +62,7 @@ manifest.webmanifest
 sw.js
 css/style.css
 js/settings.js    instellingen + localStorage
-js/splits.js      splitsgenerator (totaal, gegeven, juist/fout)
+js/splits.js      oefengenerator (splitsen, optellen, aftrekken)
 js/road.js        baan, camera-hulpjes, splitsingen, borden, kaarten
 js/audio.js       Web Audio (motor, boost, juist/fout, finish)
 js/game.js        race, auto's, boost, finish, confetti

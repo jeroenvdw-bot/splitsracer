@@ -115,7 +115,12 @@
       const splits = [];
       let previousTotal = null;
       for (let index = 0; index < length.splits; index += 1) {
-        const data = Splits.createSplit(normalized.maxNumber, Math.random, previousTotal);
+        const data = Splits.createExercise(
+          normalized.maxNumber,
+          Math.random,
+          previousTotal,
+          normalized.exerciseType
+        );
         previousTotal = data.total;
         splits.push({
           ...data,
@@ -216,13 +221,13 @@
         this.audio.boost();
         this.audio.correct();
         this.ui.showToast &&
-          this.ui.showToast("Goed zo! " + split.total + " = " + split.given + " + " + split.answer, "good");
+          this.ui.showToast("Goed zo! " + split.equation, "good");
         this.spawnBurst(race.player.x, race.player.y, "boost");
       } else {
         race.wrongCount += 1;
         this.audio.wrong();
         this.ui.showToast &&
-          this.ui.showToast("Oei! " + split.total + " = " + split.given + " + " + split.answer, "bad");
+          this.ui.showToast("Oei! " + split.equation, "bad");
         this.spawnBurst(race.player.x, race.player.y - 20, "dust");
       }
       return true;

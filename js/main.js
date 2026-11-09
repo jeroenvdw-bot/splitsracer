@@ -50,6 +50,7 @@
     btnMenu: document.getElementById("btn-menu"),
     btnMute: document.getElementById("btn-mute"),
     maxNumber: document.getElementById("max-number"),
+    exerciseType: document.getElementById("exercise-type"),
     raceLength: document.getElementById("race-length"),
     opponentWaitToggle: document.getElementById("opponent-wait-toggle"),
     soundToggle: document.getElementById("sound-toggle"),
@@ -107,6 +108,13 @@
         button.dataset.length === settings.raceLength ? "true" : "false"
       );
     });
+    elements.exerciseType.querySelectorAll("button").forEach((button) => {
+      button.classList.toggle("active", button.dataset.type === settings.exerciseType);
+      button.setAttribute(
+        "aria-pressed",
+        button.dataset.type === settings.exerciseType ? "true" : "false"
+      );
+    });
     elements.soundToggle.textContent = settings.sound ? "Aan" : "Uit";
     elements.soundToggle.setAttribute("aria-pressed", settings.sound ? "true" : "false");
     elements.opponentWaitToggle.textContent = settings.opponentWaits ? "Aan" : "Uit";
@@ -123,6 +131,7 @@
     settings.raceLength = saved.raceLength;
     settings.sound = saved.sound;
     settings.opponentWaits = saved.opponentWaits;
+    settings.exerciseType = saved.exerciseType;
     if (game) game.setSettings(settings);
     updateSettingsUI();
   }
@@ -141,14 +150,27 @@
       elements.maxNumber.appendChild(button);
     });
 
+    elements.exerciseType.innerHTML = "";
+    Object.entries(Settings.EXERCISE_TYPES).forEach(([key, value]) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.dataset.type = key;
+      button.textContent = value.label;
+      button.addEventListener("click", () => {
+        settings.exerciseType = key;
+        persistSettings();
+      });
+      elements.exerciseType.appendChild(button);
+    });
+
     elements.raceLength.innerHTML = "";
     Object.entries(Settings.RACE_LENGTHS).forEach(([key, value]) => {
       const button = document.createElement("button");
       button.type = "button";
       button.dataset.length = key;
       button.textContent = value.label;
-      button.title = value.splits + " splitsingen";
-      button.setAttribute("aria-label", value.label + ", " + value.splits + " splitsingen");
+      button.title = value.splits + " opgaven";
+      button.setAttribute("aria-label", value.label + ", " + value.splits + " opgaven");
       button.addEventListener("click", () => {
         settings.raceLength = key;
         persistSettings();
@@ -208,8 +230,8 @@
       }
       elements.resultScore.textContent =
         result.correct === result.total
-          ? "Alle " + result.total + " splitsingen goed!"
-          : "Je had " + result.correct + " van " + result.total + " splitsingen goed.";
+          ? "Alle " + result.total + " opgaven goed!"
+          : "Je had " + result.correct + " van " + result.total + " opgaven goed.";
       showScreen("result");
       elements.btnMute.classList.remove("hidden");
     },
