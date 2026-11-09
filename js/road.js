@@ -15,10 +15,11 @@
   const MERGE_START = 640;
   const MERGE_END = 900;
   const ISLAND_HALF = 34;
-  const CARD_Y_OFFSET = 270;
+  // Het splitsbord staat verderop in de baan (hoger op het scherm), boven de keuze.
+  const CARD_Y_OFFSET = 200;
   const CARD_SIZE = 140;
   const CARD_REVEAL_TIME = 0.7;
-  const SIGN_Y_OFFSET = 90;
+  const SIGN_Y_OFFSET = 350;
   const GRASS_COLOR = "#2ab766";
   const ASPHALT = "#9cc0c2";
   const ASPHALT_EDGE = "#86afb2";
@@ -526,7 +527,7 @@
       if (geometry.forkY > view.cameraTopY + 160) continue;
 
       const y = geometry.forkY + SIGN_Y_OFFSET;
-      drawGantry(ctx, view, 320, y, 480, 280, 150);
+      drawGantry(ctx, view, 320, y, 480, 280, 140);
 
       const centerX = view.sx(320);
       const centerY = view.sy(y);
@@ -537,34 +538,34 @@
       // Totaal.
       ctx.fillStyle = INK;
       ctx.font = "900 " + Math.round(68 * scale) + "px " + FONT;
-      ctx.fillText(String(split.total), centerX, centerY - 27 * scale);
+      ctx.fillText(String(split.total), centerX, centerY - 25 * scale);
 
       // Splitsdiagram.
       ctx.strokeStyle = "rgba(23, 59, 70, 0.65)";
       ctx.lineWidth = 4 * scale;
       ctx.lineCap = "round";
       ctx.beginPath();
-      ctx.moveTo(centerX, centerY - 3 * scale);
-      ctx.lineTo(centerX, centerY + 17 * scale);
-      ctx.moveTo(centerX, centerY + 17 * scale);
-      ctx.lineTo(centerX - 48 * scale, centerY + 34 * scale);
-      ctx.moveTo(centerX, centerY + 17 * scale);
-      ctx.lineTo(centerX + 48 * scale, centerY + 34 * scale);
+      ctx.moveTo(centerX, centerY - 1 * scale);
+      ctx.lineTo(centerX, centerY + 15 * scale);
+      ctx.moveTo(centerX, centerY + 15 * scale);
+      ctx.lineTo(centerX - 48 * scale, centerY + 31 * scale);
+      ctx.moveTo(centerX, centerY + 15 * scale);
+      ctx.lineTo(centerX + 48 * scale, centerY + 31 * scale);
       ctx.stroke();
 
-      ctx.font = "900 " + Math.round(42 * scale) + "px " + FONT;
+      ctx.font = "900 " + Math.round(40 * scale) + "px " + FONT;
       ctx.fillStyle = INK;
-      ctx.fillText(String(split.given), centerX - 48 * scale, centerY + 52 * scale);
+      ctx.fillText(String(split.given), centerX - 48 * scale, centerY + 48 * scale);
 
       const reveal = split.resolved && now - split.resolvedAt < 1.2;
       if (reveal) {
         ctx.fillStyle = split.correct ? "#147a43" : "#b3311f";
-        ctx.font = "900 " + Math.round(44 * scale) + "px " + FONT;
-        ctx.fillText(String(split.answer), centerX + 48 * scale, centerY + 52 * scale);
+        ctx.font = "900 " + Math.round(40 * scale) + "px " + FONT;
+        ctx.fillText(String(split.answer), centerX + 48 * scale, centerY + 48 * scale);
       } else {
         ctx.fillStyle = CURB_ORANGE;
-        ctx.font = "900 " + Math.round(48 * scale) + "px " + FONT;
-        ctx.fillText("?", centerX + 48 * scale, centerY + 52 * scale);
+        ctx.font = "900 " + Math.round(46 * scale) + "px " + FONT;
+        ctx.fillText("?", centerX + 48 * scale, centerY + 48 * scale);
       }
       ctx.restore();
     }

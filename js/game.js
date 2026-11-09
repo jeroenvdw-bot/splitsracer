@@ -15,6 +15,8 @@
   const FIRST_SPLIT_Y = 2100;
   const SPLIT_SPACING = 1650;
   const FINISH_MARGIN = 2300;
+  // Speler staat iets lager op het scherm, zodat het bord boven de keuze zichtbaar is.
+  const CAMERA_ANCHOR = 0.78;
   const FONT = "'Trebuchet MS', 'Segoe UI', Arial, sans-serif";
   const COLORS = {
     player: "#1f7fbf",
@@ -83,7 +85,7 @@
 
     viewFor(playerY, anchor) {
       const scale = this.scale;
-      const cameraTopY = playerY + this.viewH * (anchor === undefined ? 0.72 : anchor);
+      const cameraTopY = playerY + this.viewH * (anchor === undefined ? CAMERA_ANCHOR : anchor);
       return {
         cssW: this.cssW,
         cssH: this.cssH,
@@ -345,18 +347,19 @@
         if (race.goTimer <= 0) this.ui.hideCountdown && this.ui.hideCountdown();
       }
 
+      if (race.currentSplit) {
+        // Beide auto's wachten tot de speler een splitsing heeft gekozen.
+        player.speed = 0;
+        this.audio.setEngine(true, 0.07);
+        return;
+      }
+
       if (race.opponent.finishedAt === null) {
         race.opponent.y += OPPONENT_SPEED * dt;
         if (race.opponent.y >= race.finishY) {
           race.opponent.y = race.finishY + 44;
           race.opponent.finishedAt = race.elapsed;
         }
-      }
-
-      if (race.currentSplit) {
-        player.speed = 0;
-        this.audio.setEngine(true, 0.07);
-        return;
       }
 
       let target = BASE_SPEED;

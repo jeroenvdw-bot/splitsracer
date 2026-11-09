@@ -1,12 +1,12 @@
 # Splitsracer
 
 Educatief racespel voor een zesjarige: oefen **splitsingen** als splitsingen in de weg.
-De auto rijdt vanzelf omhoog over een verticale racebaan. Bij elke splitsing stopt de
-auto; tik het juiste getal aan op de linker- of rechteraftakking.
+De auto rijdt vanzelf omhoog over een verticale racebaan. Bij elke splitsing stoppen
+beide auto's; tik het juiste getal aan op de linker- of rechteraftakking.
 
 - **Juist** → de auto neemt die weg en krijgt een boost.
 - **Fout** → de auto neemt de tragere omweg, zonder boost. De juiste splitsing wordt getoond.
-- De tegenstander rijdt intussen door. Wie het eerst over de finish is, wint.
+- De tegenstander rijdt intussen mee; beide auto's pauzeren bij een opgave. Wie het eerst over de finish is, wint.
 
 ## Spelen
 
@@ -33,7 +33,8 @@ werkt het spel wel, maar de service worker en PWA-installatie niet; daarvoor is
 https of localhost nodig.
 
 Als PWA installeren: open de app in Chrome/Edge op de tablet en kies
-**Installeren** of **Toevoegen aan startscherm**. De app werkt daarna offline.
+**Installeren** of **Toevoegen aan startscherm**. De app werkt daarna offline en
+volgt de stand van het scherm (liggend of staand).
 
 ## Besturing
 

@@ -6,11 +6,11 @@ Educatief racespel voor een zesjarige (eerste leerjaar): splitsingen oefenen als
 
 - Een **rechte racebaan die verticaal scrollt**: de auto rijdt "omhoog" het scherm in (klassieke top-down racer), de camera volgt op de y-as. De auto van de speler rijdt **vanzelf** (voorlopig geen stuurcontrole).
 - De tegenstander rijdt in een parallelle strook en is **iets sneller** dan de speler → zonder boosts verliest de speler.
-- Op vaste afstanden **splitst de weg zich in twee aftakkingen: links en rechts** (de splitsing). Boven de splitsing (verder op de baan, dus hoger op het scherm) staat een bord met **het totaal** (bv. 7) en **het gegeven getal** (bv. 4). Op elke aftakking staat een groot getal (kandidaat-antwoorden, waarvan precies één juist is: totaal − gegeven). Later maakt dit het sturen naar links/rechts intuïtief (en oefent meteen de begrippen links/rechts).
+- Op vaste afstanden **splitst de weg zich in twee aftakkingen: links en rechts** (de splitsing). Bovenaan staat een bord met **het totaal** (bv. 7) en **het gegeven getal** (bv. 4). Daaronder staan op elke aftakking grote getallen (kandidaat-antwoorden, waarvan precies één juist is: totaal − gegeven). Later maakt dit het sturen naar links/rechts intuïtief (en oefent meteen de begrippen links/rechts).
 - De auto **stopt automatisch bij de splitsing** (er is geen navigatie nodig om de splitsing te activeren). Het kind **tipt het getal op één van de aftakkingen**:
   - **Juiste keuze** → de auto neemt de juiste weg en krijgt een **boost** (tijdelijke versnelling + vlammen/snelheidslijnen).
   - **Foute keuze** → de auto neemt de **foute weg, zonder boost** — een tragere/langere omweg die daarna weer op de hoofdbaan uitkomt.
-- Tijdens het kiezen rijdt de tegenstander **gewoon door**; de achterstand groeit dus als het kind traag kiest. De straf bij fout is het verloren boost-moment plus de omweg.
+- Tijdens het kiezen **pauzeren beide auto's**; de speler verliest dus geen tijd met nadenken. De straf bij fout is het verloren boost-moment plus de omweg.
 - Na de ingestelde lengte is er een finish; wie eerst over de finish rijdt, wint. Winst = feestmoment (confetti).
 - **Toekomstige uitbreiding (nu nog niet):** het kind zelf laten sturen — bij een splitsing links of rechts kiezen via een veeg/tik; de splitsingen activeren nu dus volledig automatisch.
 
@@ -25,7 +25,7 @@ Educatief racespel voor een zesjarige (eerste leerjaar): splitsingen oefenen als
 | Activeren | Automatisch bij het bereiken van de splitsing; nog geen navigatie/sturen |
 | Juiste keuze | Juiste weg nemen **met boost** |
 | Foute keuze | Foute (tragere omweg) weg nemen, **zonder boost** |
-| Tijdens kiezen | Speler stopt; tegenstander rijdt door |
+| Tijdens kiezen | Beide auto's pauzeren |
 | Max getal (instelling) | Keuzes 5 t/m 10 |
 | Geluid | Ja, gesynthetiseerd via Web Audio (motor, boost, juist/fout, finish) met mute-knop |
 | Tal van de UI | Nederlands |
@@ -34,7 +34,7 @@ Educatief racespel voor een zesjarige (eerste leerjaar): splitsingen oefenen als
 
 **Omgeving (Linux, geverifieerd):** Linux, werkmap `/home/jeroen/splitsracer`. Beschikbaar: Python 3.14 (alleen stdlib; géén PIL/pip), `curl`, `apt-get` (maar geen passwordless sudo). Niet beschikbaar: Node/npm, ImageMagick, `unzip`, Git en een browser. Daarom: assets ophalen met `curl` + uitpakken met Python `zipfile`, iconen genereren met een Python-stdlibscript, lokaal serveren met `python3 -m http.server`, en visueel/PWA testen handmatig in een browser op de host/tablet (in deze omgeving alleen statische checks).
 
-- **PWA:** `manifest.webmanifest` (naam, iconen 192/512 + maskable, standalone, landscape) + service worker `sw.js` met cache-first strategie en versiede cache → offline speelbaar.
+- **PWA:** `manifest.webmanifest` (naam, iconen 192/512 + maskable, standalone, vrije schermoriëntatie) + service worker `sw.js` met cache-first strategie en versiede cache → offline speelbaar.
 - **Iconen:** procedureel gegenereerd met `tools/make_icons.py` (Python 3-stdlib; PNG via `zlib`, dus geen PowerShell/.NET, Pillow of ImageMagick nodig): groen gras, Y-splitsing, oranje/witte curbs en een blauwe auto. 192, 512 en 512-maskable (veilige zone) + 180 apple-touch-icon.
 - **Assets:** Kenney Racing Pack (https://kenney.nl/assets/racing-pack, CC0) lokaal in `assets/`. Downloadflow op Linux (geverifieerd):
   1. `curl -A "Mozilla/5.0 …" https://kenney.nl/assets/racing-pack` — zonder browser-User-Agent geeft de site 403.

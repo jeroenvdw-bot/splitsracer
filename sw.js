@@ -1,5 +1,5 @@
 /* Splitsracer service worker — cache-first, offline speelbaar. */
-const CACHE_NAME = "splitsracer-v1";
+const CACHE_NAME = "splitsracer-v2";
 const PRECACHE = [
   "./",
   "./index.html",
