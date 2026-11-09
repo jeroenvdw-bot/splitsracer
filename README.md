@@ -1,12 +1,12 @@
 # Splitsracer
 
 Educatief racespel voor een zesjarige: oefen **splitsingen** als splitsingen in de weg.
-De auto rijdt vanzelf omhoog over een verticale racebaan. Bij elke splitsing stoppen
-beide auto's; tik het juiste getal aan op de linker- of rechteraftakking.
+De auto rijdt vanzelf omhoog over een verticale racebaan. Bij elke splitsing stopt de
+speler; tik het juiste getal aan op de linker- of rechteraftakking.
 
 - **Juist** → de auto neemt die weg en krijgt een boost.
 - **Fout** → de auto neemt de tragere omweg, zonder boost. De juiste splitsing wordt getoond.
-- De tegenstander rijdt intussen mee; beide auto's pauzeren bij een opgave. Wie het eerst over de finish is, wint.
+- De tegenstander rijdt intussen mee en kan bij een opgave pauzeren (instelbaar). Wie het eerst over de finish is, wint.
 
 ## Spelen
 
@@ -46,6 +46,7 @@ volgt de stand van het scherm (liggend of staand).
 
 - **Grootste getal:** 5 t/m 10 (het totaal van de splitsing).
 - **Racelengte:** Kort (4 splitsingen), Middel (6), Lang (8).
+- **Tegenstander wacht:** aan/uit; of de tegenstander bij een opgave pauzeert. Standaard aan.
 - **Geluid:** aan/uit; de keuze wordt in `localStorage` bewaard.
 
 ## Techniek

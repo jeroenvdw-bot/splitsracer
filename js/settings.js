@@ -8,6 +8,7 @@
     maxNumber: 7,
     raceLength: "kort",
     sound: true,
+    opponentWaits: true,
   };
 
   const RACE_LENGTHS = {
@@ -30,6 +31,10 @@
       maxNumber: clampMaxNumber(source.maxNumber),
       raceLength: RACE_LENGTHS[source.raceLength] ? source.raceLength : DEFAULTS.raceLength,
       sound: typeof source.sound === "boolean" ? source.sound : DEFAULTS.sound,
+      opponentWaits:
+        typeof source.opponentWaits === "boolean"
+          ? source.opponentWaits
+          : DEFAULTS.opponentWaits,
     };
   }
 

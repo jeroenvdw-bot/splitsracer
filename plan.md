@@ -10,7 +10,7 @@ Educatief racespel voor een zesjarige (eerste leerjaar): splitsingen oefenen als
 - De auto **stopt automatisch bij de splitsing** (er is geen navigatie nodig om de splitsing te activeren). Het kind **tipt het getal op één van de aftakkingen**:
   - **Juiste keuze** → de auto neemt de juiste weg en krijgt een **boost** (tijdelijke versnelling + vlammen/snelheidslijnen).
   - **Foute keuze** → de auto neemt de **foute weg, zonder boost** — een tragere/langere omweg die daarna weer op de hoofdbaan uitkomt.
-- Tijdens het kiezen **pauzeren beide auto's**; de speler verliest dus geen tijd met nadenken. De straf bij fout is het verloren boost-moment plus de omweg.
+- Tijdens het kiezen **pauzeert de speler**; de tegenstander wacht alleen als de instelling **Tegenstander wacht** aan staat. Anders rijdt de tegenstander door en wordt nadenken dus bestraft. De straf bij fout is het verloren boost-moment plus de omweg.
 - Na de ingestelde lengte is er een finish; wie eerst over de finish rijdt, wint. Winst = feestmoment (confetti).
 - **Toekomstige uitbreiding (nu nog niet):** het kind zelf laten sturen — bij een splitsing links of rechts kiezen via een veeg/tik; de splitsingen activeren nu dus volledig automatisch.
 
@@ -25,7 +25,7 @@ Educatief racespel voor een zesjarige (eerste leerjaar): splitsingen oefenen als
 | Activeren | Automatisch bij het bereiken van de splitsing; nog geen navigatie/sturen |
 | Juiste keuze | Juiste weg nemen **met boost** |
 | Foute keuze | Foute (tragere omweg) weg nemen, **zonder boost** |
-| Tijdens kiezen | Beide auto's pauzeren |
+| Tijdens kiezen | Speler pauzeert; tegenstander wacht optioneel (instelling) |
 | Max getal (instelling) | Keuzes 5 t/m 10 |
 | Geluid | Ja, gesynthetiseerd via Web Audio (motor, boost, juist/fout, finish) met mute-knop |
 | Tal van de UI | Nederlands |
@@ -43,7 +43,7 @@ Educatief racespel voor een zesjarige (eerste leerjaar): splitsingen oefenen als
   Gebruik: `PNG/Cars/car_blue_1.png` (speler) en `PNG/Cars/car_red_1.png` (tegenstander), beide 71×131 en staan al omhoog; `PNG/Objects/tree_large.png`, `tree_small.png` en `rock1..3.png` als scenery. De grass-tile uit de pack is een overgangstile met een bruine rand en is daarom niet als herhalende achtergrond gebruikt; het gras wordt procedureel getekend met polletjes. **De pack bevat geen finishvlag** → finish als checkered lijn + FINISH-bord in canvas. De Y-splitsing is geen kant-en-klare tegel; de baan, aftakkingen, eilandjes en curbs worden procedureel in canvas getekend in dezelfde stijl (grijs-blauw asfalt, oranje/witte curbs). Getalskaarten en borden worden in canvas getekend (groot, goed leesbaar lettertype). Neem `License.txt`/CC0-vermelding op in `assets/README.md`. Geen CDN-afhankelijkheden.
 - **Rendering:** Canvas 2D met camera die de speler volgt op de y-as; devicePixelRatio-scaling; grote tikbare zones (minstens ±64 px) voor tabletgebruik; verticale voortgangsbalk (speler vs. tegenstander) aan de zijkant als HUD.
 - **Splitsgenerator:** totaal willekeurig uit 2..max-instelling; gegeven deel willekeurig 1..totaal−1; juiste keuze = totaal − gegeven; foute kandidaten zijn nabije getallen (bijv. juiste ± 1, begrensd op 0..totaal), nooit gelijk aan het juiste antwoord.
-- **Instellingen** in localStorage: max getal (5–10), racelengte (kort/middel/lang, mappen op het aantal splitsingen), geluid aan/uit.
+- **Instellingen** in localStorage: max getal (5–10), racelengte (kort/middel/lang, mappen op het aantal splitsingen), tegenstander wacht bij een opgave (aan/uit), geluid aan/uit.
 - **Audio:** lichte gesynthetiseerde geluidjes via Web Audio API; mute-knop in het spel.
 
 ## Schermen / flow

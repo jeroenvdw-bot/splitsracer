@@ -51,6 +51,7 @@
     btnMute: document.getElementById("btn-mute"),
     maxNumber: document.getElementById("max-number"),
     raceLength: document.getElementById("race-length"),
+    opponentWaitToggle: document.getElementById("opponent-wait-toggle"),
     soundToggle: document.getElementById("sound-toggle"),
     countdown: document.getElementById("countdown"),
     prompt: document.getElementById("prompt"),
@@ -108,6 +109,11 @@
     });
     elements.soundToggle.textContent = settings.sound ? "Aan" : "Uit";
     elements.soundToggle.setAttribute("aria-pressed", settings.sound ? "true" : "false");
+    elements.opponentWaitToggle.textContent = settings.opponentWaits ? "Aan" : "Uit";
+    elements.opponentWaitToggle.setAttribute(
+      "aria-pressed",
+      settings.opponentWaits ? "true" : "false"
+    );
     updateMuteButton();
   }
 
@@ -116,6 +122,7 @@
     settings.maxNumber = saved.maxNumber;
     settings.raceLength = saved.raceLength;
     settings.sound = saved.sound;
+    settings.opponentWaits = saved.opponentWaits;
     if (game) game.setSettings(settings);
     updateSettingsUI();
   }
@@ -147,6 +154,11 @@
         persistSettings();
       });
       elements.raceLength.appendChild(button);
+    });
+
+    elements.opponentWaitToggle.addEventListener("click", () => {
+      settings.opponentWaits = !settings.opponentWaits;
+      persistSettings();
     });
 
     elements.soundToggle.addEventListener("click", () => {

@@ -348,10 +348,10 @@
       }
 
       if (race.currentSplit) {
-        // Beide auto's wachten tot de speler een splitsing heeft gekozen.
+        // De speler wacht altijd; de tegenstander alleen als dat zo is ingesteld.
         player.speed = 0;
         this.audio.setEngine(true, 0.07);
-        return;
+        if (race.settings.opponentWaits) return;
       }
 
       if (race.opponent.finishedAt === null) {
@@ -361,6 +361,8 @@
           race.opponent.finishedAt = race.elapsed;
         }
       }
+
+      if (race.currentSplit) return;
 
       let target = BASE_SPEED;
       if (player.boost > 0) target = BOOST_SPEED;
