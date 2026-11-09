@@ -1,0 +1,14 @@
+# OS-bestanden
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Node (alleen voor losse testtools gebruikt, niet in het project)
+node_modules/
+npm-debug.log*
+
+# Logs
+*.log
