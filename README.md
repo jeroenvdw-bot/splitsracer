@@ -10,6 +10,8 @@ auto; tik het juiste getal aan op de linker- of rechteraftakking.
 
 ## Spelen
 
+Online: <https://jeroenvdw-bot.github.io/splitsracer/>
+
 Lokaal:
 
 ```bash
