@@ -83,10 +83,16 @@ body {
 }
 
 .screen-settings,
-.screen-result {
+.screen-result,
+.screen-pause {
   background: rgba(5, 39, 22, 0.62);
   backdrop-filter: blur(3px);
   -webkit-backdrop-filter: blur(3px);
+}
+
+/* Onder de mute- en menuknop (z-index 5), zodat die bruikbaar blijven. */
+.screen-pause {
+  z-index: 4;
 }
 
 .title-card {
@@ -415,12 +421,12 @@ body {
   transform: translate(-50%, -8px);
 }
 
-/* ---------- Mute ---------- */
+/* ---------- Mute en menu ---------- */
 
-.mute {
+.mute,
+.home {
   position: absolute;
   top: calc(14px + var(--safe-top));
-  right: calc(14px + var(--safe-right));
   width: 56px;
   height: 56px;
   padding: 0;
@@ -440,7 +446,16 @@ body {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.22);
 }
 
-.mute .icon {
+.mute {
+  right: calc(14px + var(--safe-right));
+}
+
+.home {
+  left: calc(14px + var(--safe-left));
+}
+
+.mute .icon,
+.home .icon {
   width: 28px;
   height: 28px;
   display: block;
@@ -458,11 +473,13 @@ body {
   display: block;
 }
 
-.mute:active {
+.mute:active,
+.home:active {
   transform: scale(0.94);
 }
 
-.mute:focus-visible {
+.mute:focus-visible,
+.home:focus-visible {
   outline: 3px solid #fff;
   outline-offset: 3px;
 }
@@ -513,6 +530,26 @@ body {
   color: var(--green-dark);
   font-size: clamp(16px, 1.9vw, 21px);
   font-weight: 900;
+}
+
+/* ---------- Pauze ---------- */
+
+.pause-panel {
+  max-width: 560px;
+  text-align: center;
+}
+
+.pause-panel p {
+  margin: 0 auto;
+  max-width: 460px;
+  color: #3e5b63;
+  font-size: clamp(18px, 2.2vw, 24px);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.pause-panel .menu-buttons {
+  margin-top: clamp(20px, 3vh, 30px);
 }
 
 /* ---------- Responsief ---------- */

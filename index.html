@@ -79,6 +79,12 @@
       <div id="prompt" class="prompt hidden">Tik op het juiste getal</div>
       <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
 
+      <button id="btn-home" class="home hidden" type="button" aria-label="Naar het hoofdmenu">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 3 2.5 10.9l1.7 2.1L6 11.3V21h5v-6h2v6h5v-9.7l1.8 1.7 1.7-2.1L12 3z" fill="currentColor"></path>
+        </svg>
+      </button>
+
       <button id="btn-mute" class="mute hidden" type="button" aria-label="Geluid aan of uit">
         <svg class="icon icon-sound" viewBox="0 0 24 24" aria-hidden="true">
           <path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"></path>
@@ -90,6 +96,17 @@
           <path d="M17 9l5 6M22 9l-5 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
         </svg>
       </button>
+
+      <section id="screen-pause" class="screen screen-pause hidden">
+        <div class="panel pause-panel">
+          <h2>Even pauze</h2>
+          <p>Wil je de race stoppen?</p>
+          <div class="menu-buttons">
+            <button id="btn-resume" class="btn btn-primary" type="button">Verder spelen</button>
+            <button id="btn-pause-menu" class="btn btn-secondary" type="button">Naar het menu</button>
+          </div>
+        </div>
+      </section>
 
       <section id="screen-result" class="screen screen-result hidden">
         <div class="panel result-panel">

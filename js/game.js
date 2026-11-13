@@ -46,6 +46,7 @@
       this.ui = ui || {};
       this.settings = Settings.load();
       this.mode = "demo";
+      this.pausedMode = null;
       this.race = null;
       this.time = 0;
       this.demoY = 0;
@@ -103,6 +104,7 @@
 
     startDemo() {
       this.mode = "demo";
+      this.pausedMode = null;
       this.race = null;
       if (this.demoY < 1) this.demoY = 1;
       this.ui.hideCountdown && this.ui.hideCountdown();
@@ -174,6 +176,7 @@
       this.settings = Settings.normalize(settings || this.settings);
       this.race = this.createRace(this.settings);
       this.mode = "countdown";
+      this.pausedMode = null;
       this.particles = [];
       this.confetti = [];
       this.flameClock = 0;
@@ -184,6 +187,23 @@
       this.audio.init();
       this.audio.setEnabled(this.settings.sound);
       this.audio.countdown(3);
+    }
+
+    pause() {
+      if (this.mode !== "race" && this.mode !== "countdown") return false;
+      this.pausedMode = this.mode;
+      this.mode = "paused";
+      this.audio.stopEngine();
+      this.ui.setPrompt && this.ui.setPrompt(false);
+      return true;
+    }
+
+    resume() {
+      if (this.mode !== "paused") return false;
+      this.mode = this.pausedMode || "race";
+      this.pausedMode = null;
+      if (this.race && this.race.currentSplit) this.ui.setPrompt && this.ui.setPrompt(true);
+      return true;
     }
 
     enterChoosing(split) {
@@ -299,6 +319,7 @@
     }
 
     update(dt, now) {
+      if (this.mode === "paused") return;
       const step = Math.min(dt, 0.05);
       this.time += step;
 

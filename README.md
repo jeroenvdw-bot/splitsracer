@@ -39,7 +39,8 @@ volgt de stand van het scherm (liggend of staand).
 ## Besturing
 
 - **Tik** op een getalskaart (of ergens op de linker-/rechteraftakking) om te kiezen.
-- Toetsenbord: **←/→** of **A/D** om te kiezen, **M** voor mute.
+- **Tik linksboven op het huisje** om te pauzeren; kies daarna **Verder spelen** of **Naar het menu**.
+- Toetsenbord: **←/→** of **A/D** om te kiezen, **M** voor mute, **Esc** om te pauzeren of te hervatten.
 - **Enter/Space** start een race vanaf het titel- of resultaatscherm.
 
 ## Instellingen

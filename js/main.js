@@ -43,12 +43,16 @@
     screenTitle: document.getElementById("screen-title"),
     screenSettings: document.getElementById("screen-settings"),
     screenResult: document.getElementById("screen-result"),
+    screenPause: document.getElementById("screen-pause"),
     btnPlay: document.getElementById("btn-play"),
     btnSettings: document.getElementById("btn-settings"),
     btnSettingsDone: document.getElementById("btn-settings-done"),
     btnAgain: document.getElementById("btn-again"),
     btnMenu: document.getElementById("btn-menu"),
     btnMute: document.getElementById("btn-mute"),
+    btnHome: document.getElementById("btn-home"),
+    btnResume: document.getElementById("btn-resume"),
+    btnPauseMenu: document.getElementById("btn-pause-menu"),
     maxNumber: document.getElementById("max-number"),
     exerciseType: document.getElementById("exercise-type"),
     raceLength: document.getElementById("race-length"),
@@ -75,6 +79,7 @@
     elements.screenTitle.classList.add("hidden");
     elements.screenSettings.classList.add("hidden");
     elements.screenResult.classList.add("hidden");
+    elements.screenPause.classList.add("hidden");
   }
 
   function showScreen(name) {
@@ -234,6 +239,7 @@
           : "Je had " + result.correct + " van " + result.total + " opgaven goed.";
       showScreen("result");
       elements.btnMute.classList.remove("hidden");
+      elements.btnHome.classList.add("hidden");
     },
     hideResult() {
       elements.screenResult.classList.add("hidden");
@@ -244,6 +250,7 @@
     if (game) game.startDemo();
     showScreen("title");
     elements.btnMute.classList.add("hidden");
+    elements.btnHome.classList.add("hidden");
     elements.countdown.classList.add("hidden");
     elements.prompt.classList.add("hidden");
     elements.toast.classList.add("hidden");
@@ -254,6 +261,7 @@
     updateSettingsUI();
     showScreen("settings");
     elements.btnMute.classList.add("hidden");
+    elements.btnHome.classList.add("hidden");
     elements.countdown.classList.add("hidden");
     elements.prompt.classList.add("hidden");
     elements.toast.classList.add("hidden");
@@ -268,7 +276,29 @@
     hideScreens();
     currentScreen = "game";
     elements.btnMute.classList.remove("hidden");
+    elements.btnHome.classList.remove("hidden");
     elements.toast.classList.add("hidden");
+  }
+
+  function openPause() {
+    if (currentScreen !== "game" || !game) return;
+    if (!game.pause()) return;
+    elements.screenPause.classList.remove("hidden");
+    elements.btnHome.classList.add("hidden");
+    elements.btnResume.focus();
+  }
+
+  function resumeGame() {
+    elements.screenPause.classList.add("hidden");
+    elements.btnHome.classList.remove("hidden");
+    currentScreen = "game";
+    elements.btnResume.blur();
+    if (game) game.resume();
+  }
+
+  function quitToMenu() {
+    audio.stopEngine();
+    showTitle();
   }
 
   function toggleMute() {
@@ -284,6 +314,9 @@
   elements.btnAgain.addEventListener("click", startGame);
   elements.btnMenu.addEventListener("click", showTitle);
   elements.btnMute.addEventListener("click", toggleMute);
+  elements.btnHome.addEventListener("click", openPause);
+  elements.btnResume.addEventListener("click", resumeGame);
+  elements.btnPauseMenu.addEventListener("click", quitToMenu);
 
   document.addEventListener(
     "pointerdown",
@@ -314,6 +347,12 @@
     if (currentScreen === "settings" && event.key === "Escape") {
       event.preventDefault();
       showTitle();
+      return;
+    }
+    if (currentScreen === "game" && event.key === "Escape") {
+      event.preventDefault();
+      if (elements.screenPause.classList.contains("hidden")) openPause();
+      else resumeGame();
     }
   });
 
